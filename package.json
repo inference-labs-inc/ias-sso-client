@@ -1,0 +1,29 @@
+{
+  "name": "@inference-labs/sso-client",
+  "version": "0.1.0",
+  "description": "SSO client for Inference Labs auth. Handles authorize → callback → token exchange with PKCE.",
+  "type": "module",
+  "main": "dist/index.cjs",
+  "module": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "prepublishOnly": "tsup"
+  },
+  "devDependencies": {
+    "tsup": "^8.4.0",
+    "typescript": "~5.7.2"
+  },
+  "license": "MIT",
+  "packageManager": "pnpm@10.28.2"
+}
