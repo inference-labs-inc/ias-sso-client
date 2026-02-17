@@ -1,11 +1,11 @@
-# @inference-labs/sso-client
+# @inference-labs-inc/sso-client
 
 SSO client for Inference Labs auth. Handles the full authorize, callback, and token exchange flow with PKCE.
 
 ## Installation
 
 ```bash
-pnpm add github:inference-labs/ias-sso-client
+pnpm add github:inference-labs-inc/ias-sso-client
 ```
 
 ## Usage
@@ -13,7 +13,7 @@ pnpm add github:inference-labs/ias-sso-client
 ### 1. Create the client
 
 ```typescript
-import { SSOClient } from '@inference-labs/sso-client'
+import { SSOClient } from '@inference-labs-inc/sso-client'
 
 const sso = new SSOClient({
   apiUrl: 'https://api.auth.inferencelabs.com',
@@ -43,7 +43,7 @@ const { jwt, user } = await sso.handleCallback()
 
 ```tsx
 // src/pages/Login.tsx
-import { SSOClient } from '@inference-labs/sso-client'
+import { SSOClient } from '@inference-labs-inc/sso-client'
 
 const sso = new SSOClient({
   apiUrl: 'https://api.auth.inferencelabs.com',
@@ -57,7 +57,7 @@ export function Login() {
 ```tsx
 // src/pages/AuthCallback.tsx
 import { useEffect, useRef, useState } from 'react'
-import { SSOClient } from '@inference-labs/sso-client'
+import { SSOClient } from '@inference-labs-inc/sso-client'
 
 const sso = new SSOClient({
   apiUrl: 'https://api.auth.inferencelabs.com',

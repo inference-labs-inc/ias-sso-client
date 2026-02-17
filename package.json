@@ -1,5 +1,5 @@
 {
-  "name": "@inference-labs/sso-client",
+  "name": "@inference-labs-inc/sso-client",
   "version": "0.2.0",
   "description": "SSO client for Inference Labs auth. Handles authorize → callback → token exchange with PKCE.",
   "type": "module",
