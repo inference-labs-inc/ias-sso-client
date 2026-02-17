@@ -1,6 +1,6 @@
 {
   "name": "@inference-labs/sso-client",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "SSO client for Inference Labs auth. Handles authorize → callback → token exchange with PKCE.",
   "type": "module",
   "main": "dist/index.cjs",
