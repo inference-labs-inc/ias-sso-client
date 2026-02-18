@@ -15,7 +15,7 @@ function generateRandomString() {
 }
 var SSOClient = class {
   constructor(options) {
-    this.apiUrl = options.apiUrl.replace(/\/$/, "");
+    this.authBaseUrl = options.authBaseUrl.replace(/\/$/, "");
     this.redirectUri = options.redirectUri ?? `${window.location.origin}/auth/callback`;
     this.usePKCE = options.usePKCE ?? true;
   }
@@ -36,7 +36,7 @@ var SSOClient = class {
       params.set("code_challenge", challenge);
       params.set("code_challenge_method", "S256");
     }
-    window.location.href = `${this.apiUrl}/auth/sso/authorize?${params}`;
+    window.location.href = `${this.authBaseUrl}/auth/sso/authorize?${params}`;
   }
   /**
    * Handles the callback after the user authenticates.
@@ -62,7 +62,7 @@ var SSOClient = class {
       }
       body.code_verifier = verifier;
     }
-    const res = await fetch(`${this.apiUrl}/auth/sso/token/exchange`, {
+    const res = await fetch(`${this.authBaseUrl}/auth/sso/token/exchange`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(body)

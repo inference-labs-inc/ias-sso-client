@@ -1,6 +1,6 @@
 export interface SSOClientOptions {
-  /** Base URL of the auth API worker (e.g. https://api.auth.inferencelabs.com) */
-  apiUrl: string
+  /** Base URL of the authorization server (e.g. https://auth.inferencelabs.com) */
+  authBaseUrl: string
   /** Callback URL on your app that receives the authorization code. Defaults to `${origin}/auth/callback` */
   redirectUri?: string
   /** Enable PKCE (S256). Defaults to true. */
@@ -40,12 +40,12 @@ function generateRandomString(): string {
 }
 
 export class SSOClient {
-  private apiUrl: string
+  private authBaseUrl: string
   private redirectUri: string
   private usePKCE: boolean
 
   constructor(options: SSOClientOptions) {
-    this.apiUrl = options.apiUrl.replace(/\/$/, '')
+    this.authBaseUrl = options.authBaseUrl.replace(/\/$/, '')
     this.redirectUri = options.redirectUri ?? `${window.location.origin}/auth/callback`
     this.usePKCE = options.usePKCE ?? true
   }
@@ -70,7 +70,7 @@ export class SSOClient {
       params.set('code_challenge_method', 'S256')
     }
 
-    window.location.href = `${this.apiUrl}/auth/sso/authorize?${params}`
+    window.location.href = `${this.authBaseUrl}/auth/sso/authorize?${params}`
   }
 
   /**
@@ -102,7 +102,7 @@ export class SSOClient {
       body.code_verifier = verifier
     }
 
-    const res = await fetch(`${this.apiUrl}/auth/sso/token/exchange`, {
+    const res = await fetch(`${this.authBaseUrl}/auth/sso/token/exchange`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(body),

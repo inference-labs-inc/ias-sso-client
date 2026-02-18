@@ -16,7 +16,7 @@ pnpm add github:inference-labs-inc/ias-sso-client
 import { SSOClient } from '@inference-labs-inc/sso-client'
 
 const sso = new SSOClient({
-  apiUrl: 'https://api.auth.inferencelabs.com',
+  authBaseUrl: 'https://auth.inferencelabs.com',
 })
 ```
 
@@ -46,7 +46,7 @@ const { jwt, user } = await sso.handleCallback()
 import { SSOClient } from '@inference-labs-inc/sso-client'
 
 const sso = new SSOClient({
-  apiUrl: 'https://api.auth.inferencelabs.com',
+  authBaseUrl: 'https://auth.inferencelabs.com',
 })
 
 export function Login() {
@@ -60,7 +60,7 @@ import { useEffect, useRef, useState } from 'react'
 import { SSOClient } from '@inference-labs-inc/sso-client'
 
 const sso = new SSOClient({
-  apiUrl: 'https://api.auth.inferencelabs.com',
+  authBaseUrl: 'https://auth.inferencelabs.com',
 })
 
 export function AuthCallback() {
@@ -92,7 +92,7 @@ export function AuthCallback() {
 
 | Option | Type | Default | Description |
 |---|---|---|---|
-| `apiUrl` | `string` | **required** | Base URL of the auth API worker |
+| `authBaseUrl` | `string` | **required** | Base URL of the auth API worker |
 | `redirectUri` | `string` | `${origin}/auth/callback` | Where the user is sent after authenticating |
 | `usePKCE` | `boolean` | `true` | Enable PKCE (S256) challenge |
 

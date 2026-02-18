@@ -1,6 +1,6 @@
 interface SSOClientOptions {
-    /** Base URL of the auth API worker (e.g. https://api.auth.inferencelabs.com) */
-    apiUrl: string;
+    /** Base URL of the authorization server (e.g. https://auth.inferencelabs.com) */
+    authBaseUrl: string;
     /** Callback URL on your app that receives the authorization code. Defaults to `${origin}/auth/callback` */
     redirectUri?: string;
     /** Enable PKCE (S256). Defaults to true. */
@@ -17,7 +17,7 @@ interface TokenExchangeResult {
     user: SSOUser;
 }
 declare class SSOClient {
-    private apiUrl;
+    private authBaseUrl;
     private redirectUri;
     private usePKCE;
     constructor(options: SSOClientOptions);
