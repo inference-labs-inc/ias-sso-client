@@ -2,6 +2,8 @@
 
 SSO client for Inference Labs auth. Handles the full authorize, callback, and token exchange flow with PKCE.
 
+> 📖 **For detailed technical documentation** about the SSO flow architecture, system interactions, and implementation details, see [SSO_FLOW.md](./SSO_FLOW.md). This document covers the complete flow between the API Worker, Auth Frontend, and External Apps, including sequence diagrams and configuration requirements.
+
 ## Installation
 
 ```bash
