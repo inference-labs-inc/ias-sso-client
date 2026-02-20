@@ -94,17 +94,17 @@ export function AuthCallback() {
 
 | Option | Type | Default | Description |
 |---|---|---|---|
-| `authBaseUrl` | `string` | **required** | Base URL of the auth API worker |
+| `authBaseUrl` | `string` | **required** | Base URL of the authorization server |
 | `redirectUri` | `string` | `${origin}/auth/callback` | Where the user is sent after authenticating |
 | `usePKCE` | `boolean` | `true` | Enable PKCE (S256) challenge |
 
 ### `sso.login(): Promise<void>`
 
-Generates state + PKCE verifier, stores them in `sessionStorage`, and redirects the user to the SSO authorize endpoint.
+Generates state + PKCE verifier, stores them in `localStorage`, and redirects the user to the SSO authorize endpoint.
 
 ### `sso.handleCallback(searchParams?: URLSearchParams): Promise<TokenExchangeResult>`
 
-Validates state, exchanges the authorization code (with PKCE verifier) for a JWT, cleans up `sessionStorage`, and returns:
+Validates state, exchanges the authorization code (with PKCE verifier) for a JWT, cleans up `localStorage`, and returns:
 
 ```typescript
 interface TokenExchangeResult {

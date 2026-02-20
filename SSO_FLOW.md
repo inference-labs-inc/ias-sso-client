@@ -150,12 +150,12 @@ When a user logs into the auth frontend directly (not from an external app), `ss
 
 ```ts
 const sso = new SSOClient({
-  apiUrl: 'https://api.truthtensor.com',  // API Worker URL, NOT the auth frontend
+  authBaseUrl: 'https://api.truthtensor.com',  // API Worker URL, NOT the auth frontend
   redirectUri: `${window.location.origin}/auth/callback`,
 })
 ```
 
-`apiUrl` **must** point to the API Worker. If it points to the auth frontend, the authorize route won't exist, the SPA catch-all will redirect to `/login` with no params, and `sso_request_id` will never be stored — the SSO redirect back to the app will silently not happen.
+`authBaseUrl` **must** point to the API Worker. If it points to the auth frontend, the authorize route won't exist, the SPA catch-all will redirect to `/login` with no params, and `sso_request_id` will never be stored — the SSO redirect back to the app will silently not happen.
 
 ### Auth Frontend (`frontend/.env`)
 
