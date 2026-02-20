@@ -48,14 +48,14 @@ var SSOClient = class {
    */
   async login() {
     const state = generateRandomString();
-    sessionStorage.setItem(SSO_STATE_KEY, state);
+    localStorage.setItem(SSO_STATE_KEY, state);
     const params = new URLSearchParams({
       redirect_uri: this.redirectUri,
       state
     });
     if (this.usePKCE) {
       const verifier = generateRandomString();
-      sessionStorage.setItem(PKCE_VERIFIER_KEY, verifier);
+      localStorage.setItem(PKCE_VERIFIER_KEY, verifier);
       const challenge = await generatePKCEChallenge(verifier);
       params.set("code_challenge", challenge);
       params.set("code_challenge_method", "S256");
@@ -65,13 +65,13 @@ var SSOClient = class {
   /**
    * Handles the callback after the user authenticates.
    * Call this on your redirect_uri page. Validates state, exchanges
-   * the authorization code for a JWT, and cleans up session storage.
+   * the authorization code for a JWT, and cleans up local storage.
    */
   async handleCallback(searchParams) {
     const params = searchParams ?? new URLSearchParams(window.location.search);
     const code = params.get("code");
     const returnedState = params.get("state");
-    const savedState = sessionStorage.getItem(SSO_STATE_KEY);
+    const savedState = localStorage.getItem(SSO_STATE_KEY);
     if (!code) {
       throw new Error("Missing authorization code in callback URL");
     }
@@ -80,7 +80,7 @@ var SSOClient = class {
     }
     const body = { code };
     if (this.usePKCE) {
-      const verifier = sessionStorage.getItem(PKCE_VERIFIER_KEY);
+      const verifier = localStorage.getItem(PKCE_VERIFIER_KEY);
       if (!verifier) {
         throw new Error("Missing PKCE verifier \u2014 login flow may have been interrupted");
       }
@@ -95,8 +95,8 @@ var SSOClient = class {
       const err = await res.json().catch(() => ({ error: "Token exchange failed" }));
       throw new Error(err.error ?? `HTTP ${res.status}`);
     }
-    sessionStorage.removeItem(SSO_STATE_KEY);
-    sessionStorage.removeItem(PKCE_VERIFIER_KEY);
+    localStorage.removeItem(SSO_STATE_KEY);
+    localStorage.removeItem(PKCE_VERIFIER_KEY);
     return res.json();
   }
 };

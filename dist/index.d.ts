@@ -28,7 +28,7 @@ declare class SSOClient {
     /**
      * Handles the callback after the user authenticates.
      * Call this on your redirect_uri page. Validates state, exchanges
-     * the authorization code for a JWT, and cleans up session storage.
+     * the authorization code for a JWT, and cleans up local storage.
      */
     handleCallback(searchParams?: URLSearchParams): Promise<TokenExchangeResult>;
 }

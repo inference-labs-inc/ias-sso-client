@@ -55,7 +55,7 @@ export class SSOClient {
    */
   async login(): Promise<void> {
     const state = generateRandomString()
-    sessionStorage.setItem(SSO_STATE_KEY, state)
+    localStorage.setItem(SSO_STATE_KEY, state)
 
     const params = new URLSearchParams({
       redirect_uri: this.redirectUri,
@@ -64,7 +64,7 @@ export class SSOClient {
 
     if (this.usePKCE) {
       const verifier = generateRandomString()
-      sessionStorage.setItem(PKCE_VERIFIER_KEY, verifier)
+      localStorage.setItem(PKCE_VERIFIER_KEY, verifier)
       const challenge = await generatePKCEChallenge(verifier)
       params.set('code_challenge', challenge)
       params.set('code_challenge_method', 'S256')
@@ -76,13 +76,13 @@ export class SSOClient {
   /**
    * Handles the callback after the user authenticates.
    * Call this on your redirect_uri page. Validates state, exchanges
-   * the authorization code for a JWT, and cleans up session storage.
+   * the authorization code for a JWT, and cleans up local storage.
    */
   async handleCallback(searchParams?: URLSearchParams): Promise<TokenExchangeResult> {
     const params = searchParams ?? new URLSearchParams(window.location.search)
     const code = params.get('code')
     const returnedState = params.get('state')
-    const savedState = sessionStorage.getItem(SSO_STATE_KEY)
+    const savedState = localStorage.getItem(SSO_STATE_KEY)
 
     if (!code) {
       throw new Error('Missing authorization code in callback URL')
@@ -95,7 +95,7 @@ export class SSOClient {
     const body: Record<string, string> = { code }
 
     if (this.usePKCE) {
-      const verifier = sessionStorage.getItem(PKCE_VERIFIER_KEY)
+      const verifier = localStorage.getItem(PKCE_VERIFIER_KEY)
       if (!verifier) {
         throw new Error('Missing PKCE verifier — login flow may have been interrupted')
       }
@@ -113,8 +113,8 @@ export class SSOClient {
       throw new Error((err as { error?: string }).error ?? `HTTP ${res.status}`)
     }
 
-    sessionStorage.removeItem(SSO_STATE_KEY)
-    sessionStorage.removeItem(PKCE_VERIFIER_KEY)
+    localStorage.removeItem(SSO_STATE_KEY)
+    localStorage.removeItem(PKCE_VERIFIER_KEY)
 
     return res.json()
   }
